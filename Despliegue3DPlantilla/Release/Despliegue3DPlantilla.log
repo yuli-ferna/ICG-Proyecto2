@@ -1,0 +1,11 @@
+﻿  SOff.cpp
+c:\users\yuliana\desktop\proy\despliegue3dplantilla-master\src\soff.cpp(48): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+c:\users\yuliana\desktop\proy\despliegue3dplantilla-master\src\soff.cpp(49): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+c:\users\yuliana\desktop\proy\despliegue3dplantilla-master\src\soff.cpp(50): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+c:\users\yuliana\desktop\proy\despliegue3dplantilla-master\src\soff.cpp(55): warning C4018: '<': no coinciden signed/unsigned
+  Generando código
+  1 of 450 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Generación de código finalizada
+  Despliegue3DPlantilla.vcxproj -> C:\Users\Yuliana\Desktop\proy\Despliegue3DPlantilla-master\Release\Despliegue3DPlantilla.exe
