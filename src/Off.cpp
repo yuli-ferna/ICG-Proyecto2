@@ -12,7 +12,7 @@ COff::~COff()
 bool COff::load(string path)
 {
 	fstream file;
-	string token, nV1, nV2, nV3, n;
+	string token, nV1, nV2, nV3, n, trash;
 	
 	file.open(path, std::ios::in);
 
@@ -51,19 +51,27 @@ bool COff::load(string path)
 		{
 			std::cout << i << " " << vertex[i].x << " " << vertex[i].y << " " << vertex[i].z << " " << std::endl;
 		}*/
+		int NF =0; //Numero de caras reales
 		for (int i = 0; i < mNumOfFaces; i++)
 		{
-			int NV;
 			
 			file >> n;
+			int num = (atoi(n.c_str()));
 			file >> nV1;
-			file >> nV2;
-			file >> nV3;
-			
-			faces.push_back(glm::ivec3((atoi(nV1.c_str())), (atoi(nV2.c_str())), (atoi(nV3.c_str()))));
+			int vert1 = atoi(nV1.c_str());
 
+			file >> nV2;
+			int vert2 = atoi(nV2.c_str());
+			for (unsigned int i = 0; i < num-2; i++)
+			{
+				file >> nV3;
+				faces.push_back(glm::ivec3(vert1, vert2, (atoi(nV3.c_str()))));
+				vert2 = atoi(nV3.c_str());
+				NF++;
+			}
+			getline(file, trash);
 		}
-		
+		mNumOfFaces = NF;
 		faces.clear();
 		file.close();
 		return true;

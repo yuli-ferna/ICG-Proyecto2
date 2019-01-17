@@ -2,12 +2,13 @@
 #include "Windows.h"
 #include <iostream> 
 #include <fstream> 
-
+using namespace std;
 extern int gWidth, gHeight;
 void TW_CALL CallbackLoad(void *clientData);
 string loadPath();
 void load(string path);
 
+void beginLoad(string path);
 // Global static pointer used to ensure a single instance of the class.
 CUserInterface * CUserInterface::mInterface = NULL;
 
@@ -38,7 +39,7 @@ CUserInterface::CUserInterface()
 	mModelTranslation[0] = 0.0f;
 	mModelTranslation[1] = 0.0f;
 	mModelTranslation[2] = 0.0f;
-
+	TwAddVarRW(mUserInterface, "Figura", TW_TYPE_UINT32, &figura, "label='Figura' min=0 max=1000");
 	TwAddVarRW(mUserInterface, "X", TW_TYPE_FLOAT, &mModelTranslation[0], " group='Translation' step=0.01 ");
 	TwAddVarRW(mUserInterface, "Y", TW_TYPE_FLOAT, &mModelTranslation[1], " group='Translation' step=0.01 ");
 	TwAddVarRW(mUserInterface, "Z", TW_TYPE_FLOAT, &mModelTranslation[2], " group='Translation' step=0.01 ");
@@ -77,6 +78,16 @@ glm::vec3 CUserInterface::getModelTranslation()
 	return mModelTranslation;
 }
 
+unsigned int CUserInterface::getSelectModel()
+{
+	return figura;
+}
+
+void CUserInterface::setNumModel(unsigned int num)
+{
+	figuraMax = num;
+}
+
 string loadPath()
 {
 	OPENFILENAME ofn;
@@ -99,7 +110,7 @@ void TW_CALL CallbackLoad(void *clientData)
 {
 	string path = loadPath();
 	if (path != "")
-		load(path);
+		beginLoad(path);
 
 }
 

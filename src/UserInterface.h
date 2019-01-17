@@ -17,7 +17,8 @@ private:
 	static CUserInterface * mInterface; //Holds the instance of the class
 	TwBar *mUserInterface;
 	glm::vec3 mModelTranslation;
-
+	unsigned int figura;
+	unsigned int figuraMax;
 public:
 	///Method to obtain the only instance of the calls
 	static CUserInterface * Instance();
@@ -27,15 +28,8 @@ public:
 	void hide();
 	void setModelTranslation(float *modelTranslation);
 	glm::vec3 getModelTranslation();
-
-	/*string loadPath();
-
-	void TW_CALL CallbackLoad();
-
-	void TW_CALL CallbackLoad(void * clientData);
-
-	void load(string path);*/
-
+	unsigned int getSelectModel();
+	void setNumModel(unsigned int num);
 
 private:
 	///Private constructor

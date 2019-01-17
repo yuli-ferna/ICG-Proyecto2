@@ -18,12 +18,7 @@ bool CObj::load(string path) {
 
 	file >> token;
 	while (!file.eof()) {
-		//if (file.eof()) break;
-		//cout << "token: " << token << endl;
-		/*if (!checkValidToken(token)) {
-			getline(file, token);
-		}
-		else {*/
+
 		if (token == "v") {
 			file >> v1;
 			file >> v2;
@@ -32,7 +27,6 @@ bool CObj::load(string path) {
 		}
 		//No me interesa para nada vn y vt
 		else if (token == "f") {
-			//getline(file, v1);
 
 			int ver1, ver2, ver3;
 			file >> v1;
@@ -47,8 +41,10 @@ bool CObj::load(string path) {
 		else
 		{
 			getline(file, trash);
+			//cout << token << " " << trash << endl;
 		}
-			
+		//getline(file, trash);
+
 		file >> token;
 
 

@@ -18,10 +18,15 @@ int picked;
 
 void updateUserInterface()
 {
-	if (picked > -1)
-		models[picked]->setTranslation(userInterface->getModelTranslation());
-	//mIENTRAS PUEDO TOMAR DEL TWEACKBAR EL NUM DE LA FIGURA
-	//input de tipo enterio con restriccion
+	userInterface->setNumModel(models.size() - 1);
+	int picked = userInterface->getSelectModel();
+	//if (picked > -1)
+	if (picked >= models.size())
+	{
+		picked = models.size() - 1;
+	}
+	models[picked]->setTranslation(userInterface->getModelTranslation());
+	
 }
 
 void display()
@@ -149,15 +154,13 @@ bool initScene()
 	/*
 	if (!off->load("../files/Apple.off"))
 		return false;
-	models.push_back(off);*/
+	models.push_back(off);
 	if(!soff->load("../files/cube.soff"))
 		return false;
-	models.push_back(soff);
-
-	if (!obj->load("../files/house3.obj"))
+	models.push_back(soff);*/
+	if (!obj->load("../files/Batman.obj"))
 		return false;
 	models.push_back(obj);
-
 	return true;
 }
 
