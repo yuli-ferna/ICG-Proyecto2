@@ -1,7 +1,12 @@
 #include "Main.h"
 #include "Model.h"
 #include "SOff.h"
+#include "Off.h"
+#include "CObj.h"
 #include "UserInterface.h"
+#include <iostream> 
+#include <fstream> 
+using namespace std;
 
 using std::vector;
 
@@ -15,6 +20,8 @@ void updateUserInterface()
 {
 	if (picked > -1)
 		models[picked]->setTranslation(userInterface->getModelTranslation());
+	//mIENTRAS PUEDO TOMAR DEL TWEACKBAR EL NUM DE LA FIGURA
+	//input de tipo enterio con restriccion
 }
 
 void display()
@@ -102,7 +109,7 @@ bool initGlfw()
 	if (!glfwInit())
 		return false;
 
-	gWindow = glfwCreateWindow(gWidth, gHeight, "Chapter 2", NULL, NULL);
+	gWindow = glfwCreateWindow(gWidth, gHeight, "Proyecto 2 Yuliana Fernandez 26.838.996", NULL, NULL);
 
 	if (!gWindow)
 	{
@@ -137,16 +144,19 @@ bool initUserInterface()
 bool initScene()
 {
 	CSOff* soff = new CSOff();
-	
-	/*if(!soff->load("../files/cube.soff"))
+	COff* off = new COff();
+	CObj* obj = new CObj();
+	/*
+	if (!off->load("../files/Apple.off"))
 		return false;
-	if (!soff->load("../files/Apple.off"))
-		return false;
-	models.push_back(soff);*/
-
-	if (!soff->load("../files/Apple.off"))
+	models.push_back(off);*/
+	if(!soff->load("../files/cube.soff"))
 		return false;
 	models.push_back(soff);
+
+	if (!obj->load("../files/house3.obj"))
+		return false;
+	models.push_back(obj);
 
 	return true;
 }
@@ -185,3 +195,35 @@ int main(void)
 
 	return EXIT_SUCCESS;
 }
+
+void beginLoad(string path) {
+	//ifstream infile(path);
+	string aux = path;
+	string extension = aux.erase(0, aux.find(".") + 1);
+	cout << "extension: " << extension << endl;
+	//Caso archivo OFF:
+	if (extension == "off" || extension == "OFF") {
+		cout << "hola mal" << endl;
+		COff* coff = new COff();
+		if (!coff->load(path))
+			return;
+		models.push_back(coff);
+	}
+	//Caso archivo OBJ:
+	else if (extension == "obj" || extension == "OBJ") {
+		cout << "hola asdad" << endl;
+		CObj* cobj = new CObj();
+		if (!cobj->load(path))
+			return;
+		models.push_back(cobj);
+	}
+}
+
+string extractString(string source, string start, string end) {
+	size_t startIndex = source.find(start);
+	size_t endIndex;
+	startIndex += start.length();
+	endIndex = source.find(end, startIndex);
+	return source.substr(startIndex, endIndex - startIndex);
+}
+

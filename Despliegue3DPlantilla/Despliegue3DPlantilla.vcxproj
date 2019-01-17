@@ -116,14 +116,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\CObj.cpp" />
     <ClCompile Include="..\src\Main.cpp" />
     <ClCompile Include="..\src\Model.cpp" />
+    <ClCompile Include="..\src\Off.cpp" />
     <ClCompile Include="..\src\SOff.cpp" />
     <ClCompile Include="..\src\UserInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\CObj.h" />
     <ClInclude Include="..\src\Main.h" />
     <ClInclude Include="..\src\Model.h" />
+    <ClInclude Include="..\src\Off.h" />
     <ClInclude Include="..\src\SOff.h" />
     <ClInclude Include="..\src\UserInterface.h" />
   </ItemGroup>

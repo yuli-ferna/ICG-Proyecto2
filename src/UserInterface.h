@@ -2,8 +2,10 @@
 
 #include "../headers/AntTweakBar.h"
 #include "../headers/glm/glm.hpp"
+#include "Windows.h"
 #include <iostream>
 #include <string>
+#include <fstream> 
 
 using std::string;
 
@@ -25,6 +27,14 @@ public:
 	void hide();
 	void setModelTranslation(float *modelTranslation);
 	glm::vec3 getModelTranslation();
+
+	/*string loadPath();
+
+	void TW_CALL CallbackLoad();
+
+	void TW_CALL CallbackLoad(void * clientData);
+
+	void load(string path);*/
 
 
 private:

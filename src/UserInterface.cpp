@@ -1,6 +1,12 @@
 #include "UserInterface.h"
+#include "Windows.h"
+#include <iostream> 
+#include <fstream> 
 
 extern int gWidth, gHeight;
+void TW_CALL CallbackLoad(void *clientData);
+string loadPath();
+void load(string path);
 
 // Global static pointer used to ensure a single instance of the class.
 CUserInterface * CUserInterface::mInterface = NULL;
@@ -36,6 +42,8 @@ CUserInterface::CUserInterface()
 	TwAddVarRW(mUserInterface, "X", TW_TYPE_FLOAT, &mModelTranslation[0], " group='Translation' step=0.01 ");
 	TwAddVarRW(mUserInterface, "Y", TW_TYPE_FLOAT, &mModelTranslation[1], " group='Translation' step=0.01 ");
 	TwAddVarRW(mUserInterface, "Z", TW_TYPE_FLOAT, &mModelTranslation[2], " group='Translation' step=0.01 ");
+	TwAddButton(mUserInterface, "Load", CallbackLoad, NULL, " label='Run Forest' ");
+
 }
 
 CUserInterface::~CUserInterface()
@@ -67,4 +75,37 @@ void CUserInterface::setModelTranslation(float *modelTranslation)
 glm::vec3 CUserInterface::getModelTranslation()
 {
 	return mModelTranslation;
+}
+
+string loadPath()
+{
+	OPENFILENAME ofn;
+	char fileName[MAX_PATH] = "";
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = NULL;
+	ofn.lpstrFilter = "OBJ Files(.obj)\0*.obj\0OFF Files(.off)\0*.off";
+	ofn.lpstrFile = fileName;
+	ofn.nMaxFile = MAX_PATH;
+	ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
+	ofn.lpstrDefExt = "";
+	string fileNameStr;
+	if (GetOpenFileName(&ofn))
+		fileNameStr = fileName;
+	return fileNameStr;
+}
+
+void TW_CALL CallbackLoad(void *clientData)
+{
+	string path = loadPath();
+	if (path != "")
+		load(path);
+
+}
+
+void load(string path) {
+	std::ifstream infile(path);
+	while (true) {
+		if (infile.eof()) break;
+	}
 }
