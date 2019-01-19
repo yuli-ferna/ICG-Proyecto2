@@ -1,7 +1,16 @@
 ﻿  CObj.cpp
+c:\users\yuliana\desktop\despliegue3dplantilla-master\src\cobj.cpp(127): warning C4018: '<': no coinciden signed/unsigned
+  Main.cpp
+c:\program files\windows kits\10\include\10.0.17134.0\shared\minwindef.h(130): warning C4005: 'APIENTRY': redefinición de macro
+  c:\users\yuliana\desktop\despliegue3dplantilla-master\headers\glfw3.h(85): note: vea la definición anterior de 'APIENTRY'
+c:\users\yuliana\desktop\despliegue3dplantilla-master\src\main.cpp(27): warning C4018: '>=': no coinciden signed/unsigned
+  Model.cpp
+  Off.cpp
+c:\users\yuliana\desktop\despliegue3dplantilla-master\src\off.cpp(65): warning C4018: '<': no coinciden signed/unsigned
+c:\users\yuliana\desktop\despliegue3dplantilla-master\src\off.cpp(147): warning C4018: '<': no coinciden signed/unsigned
+  SOff.cpp
+  UserInterface.cpp
   Generando código
-  10 of 450 functions ( 2.2%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
+  All 466 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Generación de código finalizada
-    2 functions had inline decision re-evaluated but remain unchanged
-  Despliegue3DPlantilla.vcxproj -> C:\Users\Yuliana\Desktop\proy\Despliegue3DPlantilla-master\Release\Despliegue3DPlantilla.exe
+  Despliegue3DPlantilla.vcxproj -> C:\Users\Yuliana\Desktop\Despliegue3DPlantilla-master\Release\Despliegue3DPlantilla.exe

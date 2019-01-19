@@ -14,10 +14,11 @@ class CModel
 	protected:
 		vector<glm::vec3> mVertices;
 		glm::vec3 mTranslation;
+		glm::vec3 mScale;
 		int mNumOfVertices;
 		int mNumOfFaces;
 		int mNumOfAristas;
-
+		GLuint list;
 	public:
 		CModel();
 		~CModel();
@@ -25,4 +26,8 @@ class CModel
 		virtual void display();
 		void setTranslation(glm::vec3 translation);
 		glm::vec3 getTranslation();
+		void setScale(glm::vec3 Scale);
+		glm::vec3 getScale();
+		void createList();
+		void displayList();
 };

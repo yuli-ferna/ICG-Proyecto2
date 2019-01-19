@@ -36,15 +36,41 @@ CUserInterface::CUserInterface()
 	TwDefine("Model position = '20 20'");
 	TwDefine("Model size = '220 320'");
 
+	//Inicializamos valores
+	TwEnumVal displaysEV[] = { { GLBGLE, "gl Begin gl End" },{ LIST, "List" },{ VBO, "VBO" } };
+	disp = GLBGLE;
+	displayType = TwDefineEnum("displayType", displaysEV, 3);
+	rotSpeed = 0;
+	quat = glm::vec4(glm::vec3(0.0f), 1.0f);
 	mModelTranslation[0] = 0.0f;
 	mModelTranslation[1] = 0.0f;
 	mModelTranslation[2] = 0.0f;
-	TwAddVarRW(mUserInterface, "Figura", TW_TYPE_UINT32, &figura, "label='Figura' min=0 max=1000");
+	mModelScale[0] = 1.0f;
+	mModelScale[1] = 1.0f;
+	mModelScale[2] = 1.0f;
+
+	//Elementos de la interfaz
+	//TwAddVarRW(mUserInterface, "Deploy", DeployTwType, &m_currentDeploy, NULL);
+	TwAddButton(mUserInterface, "Load", CallbackLoad, NULL, " label='Cargar archivo' ");
+	TwAddSeparator(mUserInterface, "", NULL);
+	TwAddVarRW(mUserInterface, "Figura", TW_TYPE_UINT32, &figura, "label='Figura Seleccionada' min=0 max=10");
+	TwAddVarRW(mUserInterface, "Display", displayType, &disp, NULL);
+	TwAddSeparator(mUserInterface, "", NULL);
 	TwAddVarRW(mUserInterface, "X", TW_TYPE_FLOAT, &mModelTranslation[0], " group='Translation' step=0.01 ");
 	TwAddVarRW(mUserInterface, "Y", TW_TYPE_FLOAT, &mModelTranslation[1], " group='Translation' step=0.01 ");
 	TwAddVarRW(mUserInterface, "Z", TW_TYPE_FLOAT, &mModelTranslation[2], " group='Translation' step=0.01 ");
-	TwAddButton(mUserInterface, "Load", CallbackLoad, NULL, " label='Run Forest' ");
+	TwAddSeparator(mUserInterface, "", NULL);
+	TwAddVarRW(mUserInterface, "Sc X", TW_TYPE_FLOAT, &mModelScale[0], " group='Scale' step=0.01 ");
+	TwAddVarRW(mUserInterface, "Sc Y", TW_TYPE_FLOAT, &mModelScale[1], " group='Scale' step=0.01 ");
+	TwAddVarRW(mUserInterface, "Sc Z", TW_TYPE_FLOAT, &mModelScale[2], " group='Scale' step=0.01 ");
+	TwAddSeparator(mUserInterface, "", NULL);
+	TwAddVarRW(mUserInterface, "Rotation", TW_TYPE_QUAT4F, &quat, "");
 
+}
+
+void CUserInterface::updateInterface()
+{
+	
 }
 
 CUserInterface::~CUserInterface()
@@ -55,6 +81,7 @@ void CUserInterface::reshape()
 {
 	TwWindowSize(gWidth, gHeight);
 }
+
 
 void CUserInterface::show()
 {
@@ -78,6 +105,18 @@ glm::vec3 CUserInterface::getModelTranslation()
 	return mModelTranslation;
 }
 
+void CUserInterface::setModelScale(float *modelScale)
+{
+	mModelScale[0] = modelScale[0];
+	mModelScale[1] = modelScale[1];
+	mModelScale[2] = modelScale[2];
+}
+
+glm::vec3 CUserInterface::getModelScale()
+{
+	return mModelScale;
+}
+
 unsigned int CUserInterface::getSelectModel()
 {
 	return figura;
@@ -85,7 +124,18 @@ unsigned int CUserInterface::getSelectModel()
 
 void CUserInterface::setNumModel(unsigned int num)
 {
+
 	figuraMax = num;
+}
+
+glm::vec4 CUserInterface::getQuat()
+{
+	return quat;
+}
+
+void CUserInterface::setQuat(glm::vec4 q)
+{
+	quat = q;
 }
 
 string loadPath()
@@ -119,4 +169,12 @@ void load(string path) {
 	while (true) {
 		if (infile.eof()) break;
 	}
+}
+
+int CUserInterface::getDisplayType() 
+{
+	if (disp == GLBGLE) return 0;
+	if (disp == LIST) return 1;
+	if (disp == VBO) return 2;
+	return NULL;
 }

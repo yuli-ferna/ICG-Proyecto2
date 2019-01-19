@@ -6,6 +6,9 @@
 #include "UserInterface.h"
 #include <iostream> 
 #include <fstream> 
+#define GL_B_GL_E 0
+#define LIST 1
+#define VBO 2
 using namespace std;
 
 using std::vector;
@@ -15,17 +18,22 @@ int gWidth, gHeight;
 CUserInterface * userInterface;
 vector <CModel *> models;
 int picked;
+int modeDisplay = 0;
 
 void updateUserInterface()
 {
 	userInterface->setNumModel(models.size() - 1);
 	int picked = userInterface->getSelectModel();
+	modeDisplay = userInterface->getDisplayType();
+	//cout << modeDisplay << endl;
 	//if (picked > -1)
 	if (picked >= models.size())
 	{
 		picked = models.size() - 1;
 	}
 	models[picked]->setTranslation(userInterface->getModelTranslation());
+	models[picked]->setScale(userInterface->getModelScale());
+	//userInterface->updateInterface();
 	
 }
 
@@ -38,15 +46,40 @@ void display()
 	for (unsigned int i = 0; i < models.size(); i++)
 	{	
 		glm::vec3 translation = models[i]->getTranslation();
+		glm::vec3 scale = models[i]->getScale();
 
 		glPushMatrix();
 			glTranslatef(translation.x, translation.y, translation.z);
-			models[i]->display();
+			glScalef(scale.x, scale.y, scale.z);
+			if (modeDisplay == GL_B_GL_E)
+			{
+				models[i]->display();
+			}
+			else if (modeDisplay == LIST)
+			{
+				models[i]->createList();
+				models[i]->displayList();
+			}
+
 		glPopMatrix();
 	}
 		
-}
+}/*
+void dislpayList() {
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	GLuint i;
+	list = glGenLists(1);
+	glNewList(list, GL_COMPILE);
+	//glColor3fv(color);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_POINTS);
+	glBegin(GL_POINTS);
+	display();
+	glEnd();
+	glEndList();
+}
+*/
 void reshape(GLFWwindow *window, int width, int height)
 {
 	gWidth = width;
@@ -154,13 +187,13 @@ bool initScene()
 	/*
 	if (!off->load("../files/Apple.off"))
 		return false;
-	models.push_back(off);
+	models.push_back(off);*/
 	if(!soff->load("../files/cube.soff"))
 		return false;
-	models.push_back(soff);*/
-	if (!obj->load("../files/Batman.obj"))
+	models.push_back(soff);
+	/*if (!obj->load("../files/Batman.obj"))
 		return false;
-	models.push_back(obj);
+	models.push_back(obj);*/
 	return true;
 }
 

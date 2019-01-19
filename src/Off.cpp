@@ -37,20 +37,20 @@ bool COff::load(string path)
 
 		mNumOfAristas = atoi(token.c_str());
 
-		std::cout << mNumOfVertices << " " << mNumOfFaces << " " << mNumOfAristas << std::endl;
-
+		//std::cout << mNumOfVertices << " " << mNumOfFaces << " " << mNumOfAristas << std::endl;
+		//Tomamos los vértices
 		for (int i = 0; i < mNumOfVertices; i++)
 		{
 			file >> nV1;
 			file >> nV2;
 			file >> nV3;
-			
+			Max(glm::vec3((atof(nV1.c_str())), (atof(nV2.c_str())), (atof(nV3.c_str()))));
+			Min(glm::vec3((atof(nV1.c_str())), (atof(nV2.c_str())), (atof(nV3.c_str()))));
 			mVertices.push_back(glm::vec3((atof(nV1.c_str())), (atof(nV2.c_str())), (atof(nV3.c_str()))));
 		}
-		/*for (int i = 0; i < vertex.size(); i++)
-		{
-			std::cout << i << " " << vertex[i].x << " " << vertex[i].y << " " << vertex[i].z << " " << std::endl;
-		}*/
+		//Normalizamos los vertices
+		normalize();
+
 		int NF =0; //Numero de caras reales
 		for (int i = 0; i < mNumOfFaces; i++)
 		{
@@ -65,6 +65,7 @@ bool COff::load(string path)
 			for (unsigned int i = 0; i < num-2; i++)
 			{
 				file >> nV3;
+				
 				faces.push_back(glm::ivec3(vert1, vert2, (atoi(nV3.c_str()))));
 				vert2 = atoi(nV3.c_str());
 				NF++;
@@ -89,5 +90,64 @@ void COff::display() {
 		glVertex3f(mVertices[faces[i].y].x, mVertices[faces[i].y].y, mVertices[faces[i].y].z);
 		glVertex3f(mVertices[faces[i].z].x, mVertices[faces[i].z].y, mVertices[faces[i].z].z);
 		glEnd();
+	}
+}
+
+
+
+void COff::Max(glm::vec3 a) {
+	if (a.x > max.x)
+	{
+		max.x = a.x;
+	}
+	if (a.y > max.y)
+	{
+		max.y = a.y;
+
+	}
+	if (a.z > max.z)
+	{
+		max.z = a.z;
+	}
+}
+
+void COff::Min(glm::vec3 a) {
+	if (a.x < min.x)
+	{
+		min.x = a.x;
+	}
+	if (a.y < min.y)
+	{
+		min.y = a.y;
+
+	}
+	if (a.z < min.z)
+	{
+		min.z = a.z;
+	}
+}
+
+
+void COff::normalize()
+{
+	//para todos los vertices le restas el medio general y lo divides entre el maximo general
+	mit.x = (max.x - min.x)/2;
+	mit.y = (max.y - min.y)/2;
+	mit.z = (max.z - min.z)/2;
+	float maxT = max.x;
+	if (maxT < max.y)
+	{
+		maxT = max.y;
+	}
+	if (maxT < max.z)
+	{
+		maxT = max.z;
+	}
+
+	for (int i = 0; i < mVertices.size(); i++)
+	{
+		mVertices[i].x = (mVertices[i].x - mit.x) / maxT;
+		mVertices[i].y = (mVertices[i].y - mit.y) / maxT;
+		mVertices[i].z = (mVertices[i].z - mit.z) / maxT;
 	}
 }

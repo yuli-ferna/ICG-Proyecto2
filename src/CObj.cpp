@@ -23,9 +23,11 @@ bool CObj::load(string path) {
 			file >> v1;
 			file >> v2;
 			file >> v3;
+
+			Max(glm::vec3((atof(v1.c_str())), (atof(v2.c_str())), (atof(v3.c_str()))));
+			Min(glm::vec3((atof(v1.c_str())), (atof(v2.c_str())), (atof(v3.c_str()))));
 			mVertices.push_back(glm::vec3((atof(v1.c_str())), (atof(v2.c_str())), (atof(v3.c_str()))));
 		}
-		//No me interesa para nada vn y vt
 		else if (token == "f") {
 
 			int ver1, ver2, ver3;
@@ -46,16 +48,10 @@ bool CObj::load(string path) {
 		//getline(file, trash);
 
 		file >> token;
-
-
 	}
+	//Normalizamos los vertices
+	normalize();
 	return true;
-}
-
-bool CObj::checkValidToken(string token) {
-	if (token == "v"/* || token == "vn" || token == "vt" */ || token == "f")
-		return true;
-	return false;
 }
 
 void CObj::display()
@@ -78,4 +74,60 @@ int CObj::extractIndices(string vert)
 	string token = vert.substr(0, vert.find(delimiter));
 
 	return atoi(token.c_str());
+}
+
+void CObj::Max(glm::vec3 a) {
+	if (a.x > max.x)
+	{
+		max.x = a.x;
+	}
+	if (a.y > max.y)
+	{
+		max.y = a.y;
+
+	}
+	if (a.z > max.z)
+	{
+		max.z = a.z;
+	}
+}
+
+void CObj::Min(glm::vec3 a) {
+	if (a.x < min.x)
+	{
+		min.x = a.x;
+	}
+	if (a.y < min.y)
+	{
+		min.y = a.y;
+
+	}
+	if (a.z < min.z)
+	{
+		min.z = a.z;
+	}
+}
+
+
+void CObj::normalize()
+{
+	//para todos los vertices le restas el medio general y lo divides entre el maximo general
+	mit.x = (max.x - min.x) / 2;
+	mit.y = (max.y - min.y) / 2;
+	mit.z = (max.z - min.z) / 2;
+	float maxT = max.x;
+	if (maxT < max.y)
+	{
+		maxT = max.y;
+	}
+	if (maxT < max.z)
+	{
+		maxT = max.z;
+	}
+	for (int i = 0; i < mVertices.size(); i++)
+	{
+		mVertices[i].x = (mVertices[i].x - mit.x) / maxT;
+		mVertices[i].y = (mVertices[i].y - mit.y) / maxT;
+		mVertices[i].z = (mVertices[i].z - mit.z) / maxT;
+	}
 }

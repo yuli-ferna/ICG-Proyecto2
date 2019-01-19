@@ -10,17 +10,17 @@ class CObj : public CModel
 {
 	
 	vector<glm::ivec3> faces;
+	glm::vec3 min, max; //Minimo y maximo de todos los vertices
+	glm::vec3 mit; //Mitad de todo
 
 	public:
 		CObj();
 		~CObj();
 		bool load(string path);
-
-		bool checkValidToken(string token);
-
+		void Max(glm::vec3 a);
+		void Min(glm::vec3 a);
 		void display();
-
+		void normalize();
 		int extractIndices(string vert);
-
 };
 
