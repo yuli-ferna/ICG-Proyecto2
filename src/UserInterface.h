@@ -20,6 +20,7 @@ private:
 	TwBar *mUserInterface;
 	glm::vec3 mModelTranslation;
 	glm::vec3 mModelScale;
+	glm::vec4 mModelRotate;
 	
 	unsigned int figura;
 	unsigned int figuraMax;
@@ -27,7 +28,6 @@ private:
 	TwType displayType;
 	Displays disp;
 	float rotSpeed;
-	glm::vec4 quat;
 
 	
 public:
@@ -43,10 +43,9 @@ public:
 	glm::vec3 getModelScale();
 	unsigned int getSelectModel();
 	void setNumModel(unsigned int num);
-	glm::vec4 getQuat();
-	void setQuat(glm::vec4 q);
+	glm::vec4 getModelRotate();
+	void setModelRotate(glm::vec4 q);
 	int getDisplayType();
-	int getDeployType();
 	void updateInterface();
 
 private:

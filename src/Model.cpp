@@ -4,6 +4,7 @@ CModel::CModel()
 {
 	mTranslation[0] = mTranslation[1] = mTranslation[2] = 0.0f;
 	mScale[0] = mScale[1] = mScale[2] = 1.0f;
+	mRotate = glm::vec4(glm::vec3(0.0f), 1.0f);
 }
 
 CModel::~CModel()
@@ -44,6 +45,17 @@ void CModel::setScale(glm::vec3 Scale)
 glm::vec3 CModel::getScale()
 {
 	return mScale;
+}
+
+void CModel::setRotate(glm::vec4 rotate)
+{
+	mRotate = rotate;
+
+}
+
+glm::vec4 CModel::getRotate()
+{
+	return mRotate;
 }
 
 void CModel::createList() {

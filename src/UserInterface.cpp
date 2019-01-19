@@ -41,7 +41,7 @@ CUserInterface::CUserInterface()
 	disp = GLBGLE;
 	displayType = TwDefineEnum("displayType", displaysEV, 3);
 	rotSpeed = 0;
-	quat = glm::vec4(glm::vec3(0.0f), 1.0f);
+	mModelRotate = glm::vec4(glm::vec3(0.0f), 1.0f);
 	mModelTranslation[0] = 0.0f;
 	mModelTranslation[1] = 0.0f;
 	mModelTranslation[2] = 0.0f;
@@ -64,7 +64,7 @@ CUserInterface::CUserInterface()
 	TwAddVarRW(mUserInterface, "Sc Y", TW_TYPE_FLOAT, &mModelScale[1], " group='Scale' step=0.01 ");
 	TwAddVarRW(mUserInterface, "Sc Z", TW_TYPE_FLOAT, &mModelScale[2], " group='Scale' step=0.01 ");
 	TwAddSeparator(mUserInterface, "", NULL);
-	TwAddVarRW(mUserInterface, "Rotation", TW_TYPE_QUAT4F, &quat, "");
+	TwAddVarRW(mUserInterface, "Rotation", TW_TYPE_QUAT4F, &mModelRotate, "");
 
 }
 
@@ -128,14 +128,14 @@ void CUserInterface::setNumModel(unsigned int num)
 	figuraMax = num;
 }
 
-glm::vec4 CUserInterface::getQuat()
+glm::vec4 CUserInterface::getModelRotate()
 {
-	return quat;
+	return mModelRotate;
 }
 
-void CUserInterface::setQuat(glm::vec4 q)
+void CUserInterface::setModelRotate(glm::vec4 q)
 {
-	quat = q;
+	mModelRotate = q;
 }
 
 string loadPath()
