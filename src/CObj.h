@@ -21,6 +21,7 @@ class CObj : public CModel
 		void Min(glm::vec3 a);
 		void display();
 		void normalize();
+		void drawBoundingBox();
 		int extractIndices(string vert);
 };
 

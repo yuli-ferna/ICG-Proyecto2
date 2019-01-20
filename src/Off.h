@@ -19,6 +19,7 @@ public:
 	void Max(glm::vec3 a);
 	void Min(glm::vec3 a);
 	void display();
+	void drawBoundingBox();
 	void normalize();
 
 };

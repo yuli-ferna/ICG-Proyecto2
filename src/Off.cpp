@@ -81,9 +81,45 @@ bool COff::load(string path)
 
 
 void COff::display() {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_POINTS);
 	//cout << "iteracion: " << i << endl;
+	//glColor3f(1.0f, 1.0f, 1.0f);
+
 	for (int i = 0; i < mNumOfFaces; i++) {
+
+		if (pointV) {
+			glColor3fv(pointColor);
+			glPointSize(4.0);
+
+			glBegin(GL_POINTS);
+
+			glVertex3f(mVertices[faces[i].x].x, mVertices[faces[i].x].y, mVertices[faces[i].x].z);
+			glVertex3f(mVertices[faces[i].y].x, mVertices[faces[i].y].y, mVertices[faces[i].y].z);
+			glVertex3f(mVertices[faces[i].z].x, mVertices[faces[i].z].y, mVertices[faces[i].z].z);
+			glEnd();
+			glPointSize(1.0);
+
+		}
+		if (mayV)
+		{
+
+			glColor3fv(mayColor);
+
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+			glBegin(GL_TRIANGLES);
+			glVertex3f(mVertices[faces[i].x].x, mVertices[faces[i].x].y, mVertices[faces[i].x].z);
+			glVertex3f(mVertices[faces[i].y].x, mVertices[faces[i].y].y, mVertices[faces[i].y].z);
+			glVertex3f(mVertices[faces[i].z].x, mVertices[faces[i].z].y, mVertices[faces[i].z].z);
+			glEnd();
+		}
+		if (normV)
+		{
+
+		}
+
+		glColor3fv(mainColor);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		glBegin(GL_TRIANGLES);
 		glVertex3f(mVertices[faces[i].x].x, mVertices[faces[i].x].y, mVertices[faces[i].x].z);
@@ -91,8 +127,50 @@ void COff::display() {
 		glVertex3f(mVertices[faces[i].z].x, mVertices[faces[i].z].y, mVertices[faces[i].z].z);
 		glEnd();
 	}
+	if (boundBox)
+	{
+		drawBoundingBox();
+	}
 }
 
+void COff::drawBoundingBox() 
+{
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glColor3fv(bboxColor);
+
+	glBegin(GL_LINES);
+		glVertex3f(max.x, min.y, max.z);
+		glVertex3f(max.x, max.y, max.z);
+		glVertex3f(min.x, max.y, max.z);
+		glVertex3f(max.x, max.y, max.z);
+
+		glVertex3f(min.x, min.y, max.z);
+		glVertex3f(max.x, min.y, max.z);
+		glVertex3f(min.x, max.y, max.z);
+		glVertex3f(min.x, min.y, max.z);
+
+		glVertex3f(max.x, min.y, min.z);
+		glVertex3f(max.x, max.y, min.z);
+		glVertex3f(min.x, max.y, min.z);
+		glVertex3f(max.x, max.y, min.z);
+
+		glVertex3f(min.x, min.y, min.z);
+		glVertex3f(max.x, min.y, min.z);
+		glVertex3f(min.x, max.y, min.z);
+		glVertex3f(min.x, min.y, min.z);
+
+		glVertex3f(max.x, min.y, max.z);
+		glVertex3f(max.x, min.y, min.z);
+		glVertex3f(max.x, max.y, max.z);
+		glVertex3f(max.x, max.y, min.z);
+		glVertex3f(min.x, max.y, max.z);
+		glVertex3f(min.x, max.y, min.z);
+		glVertex3f(min.x, min.y, max.z);
+		glVertex3f(min.x, min.y, min.z);
+
+	glEnd();
+}
 
 
 void COff::Max(glm::vec3 a) {
@@ -150,4 +228,12 @@ void COff::normalize()
 		mVertices[i].y = (mVertices[i].y - mit.y) / maxT;
 		mVertices[i].z = (mVertices[i].z - mit.z) / maxT;
 	}
+	
+	//Normalizamos maximos y minimos
+	max.x = (max.x - mit.x) / maxT;
+	max.y = (max.y - mit.y) / maxT;
+	max.z = (max.z - mit.z) / maxT;
+	min.x = (min.x - mit.x) / maxT;
+	min.y = (min.y - mit.y) / maxT;
+	min.z = (min.z - mit.z) / maxT;
 }
